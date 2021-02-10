@@ -1,7 +1,37 @@
 let pokemonList = [
-  {name: 'Niki', height: 3, type:['cat','fluff','hypnosis']},
-  {name:'Patrick', height: 1, type:['bird','swear','fly']},
-  {name: 'zero', height: 5, type: ['dog','ghost','electric','float']},
-  {name: 'Lula', height: 0.5, type: ['spider','danse','poison']},
-  {name: 'janus', height: 0.1, type: ['leech','energySucker','jump']}
+  {
+    name: 'Niki',
+    height: 3,
+    type:['cat','fluff','hypnotizing']
+  },
+  {
+    name:'Patrick',
+    height: 1,
+    type:['bird','swearing','flying']
+  },
+  {
+    name: 'zero',
+    height: 5,
+    type: ['dog','ghost','electric','floating']
+  },
+  {
+    name: 'Lula',
+    height: 0.5,
+    type: ['spider','dansing','poison']
+  },
+  {
+    name: 'janus',
+    height: 0.1,
+    type: ['leech','energySucking','jumping']
+  }
 ];
+
+
+
+for (let i = 0; i < pokemonList.length; i++) {
+  if (pokemonList[i].height > 3){
+  document.write(pokemonList[i].name + ' (height : ' + pokemonList[i].height + ' ) - Woaw that\s a big one ! <br>');
+} else {
+  document.write(pokemonList[i].name + ' (height : ' + pokemonList[i].height + ' ) <br>');
+  }
+}
