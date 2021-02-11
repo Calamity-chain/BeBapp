@@ -1,3 +1,5 @@
+
+/*stores the list of pokemons and characteristics*/
 let pokemonList = [
   {
     name: 'Niki',
@@ -27,7 +29,7 @@ let pokemonList = [
 ];
 
 
-
+/*displays the list of pokemons and shows message for the ones bigger than 3*/
 for (let i = 0; i < pokemonList.length; i++) {
   if (pokemonList[i].height > 3){
   document.write(pokemonList[i].name + ' (height : ' + pokemonList[i].height + ' ) - Woaw that\s a big one ! <br>');
