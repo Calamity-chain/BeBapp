@@ -28,12 +28,18 @@ let pokemonList = [
   }
 ];
 
-
-/*displays the list of pokemons and shows message for the ones bigger than 3*/
-for (let i = 0; i < pokemonList.length; i++) {
-  if (pokemonList[i].height > 3){
-  document.write(pokemonList[i].name + ' (height : ' + pokemonList[i].height + ' ) - Woaw that\s a big one ! <br>');
+pokemonList.forEach(function(pokemon) {
+  if (pokemon.height > 3){
+  document.write(pokemon.name + ' (height: ' + pokemon.height + ' ) - Woaw that\s a big one ! <br>');
 } else {
-  document.write(pokemonList[i].name + ' (height : ' + pokemonList[i].height + ' ) <br>');
-  }
+  document.write(pokemon.name + ' (height: ' + pokemon.height + ' ) <br>')
 }
+});
+/*displays the list of pokemons and shows message for the ones bigger than 3*/
+/*for (let i = 0; i < pokemonList.length; i++) {
+  if (pokemonList[i].height > 3){
+  document.write(`${pokemonList[i].name} (height: ${pokemonList[i].height}) - Woaw that\s a big one ! <br>`);
+} else {
+  document.write(`${pokemonList[i].name} (height :  ${pokemonList[i].height}) <br> `);
+  }
+}*/
