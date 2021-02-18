@@ -29,6 +29,8 @@ let pokemonRepository = (function () {
       type: ['leech','energySucking','jumping']
     }
   ];
+
+
   function add(pokemon) {
     if (typeof(pokemon) === 'object') {
       pokemonList.push(pokemon);
@@ -40,32 +42,40 @@ let pokemonRepository = (function () {
       return pokemonList;
     }
 
+/* button to show detail of each pokemon */
+    function buttonListener (button, pokemon) {
+   button.addEventListener('click', function () {
+     showDetails(pokemon);
+   });
+ }
+
+    function addListItem(pokemon){
+      let pokemonList = document.querySelector('.pokemon-list');
+      let listpokemon = document.createElement('li');
+      let button = document.createElement('button');
+      button.innerText = pokemon.name;
+      button.classList.add("button-class");
+      listpokemon.appendChild(button);
+      buttonListener(button, pokemon);
+      pokemonList.appendChild(listpokemon);
+    }
+
+
+    function showDetails(pokemon) {
+      console.log(pokemon)
+    }
+
     return {
       add: add,
-      getAll: getAll
+      getAll: getAll,
+      addListItem : addListItem
     };
 })();
 
 console.log(pokemonRepository.getAll());
 
 
-/* just FYI before deleting
-PREVIOUS CODE with the $variables form you recommended me to try :
-
-for (let i = 0; i < pokemonList.length; i++) {
-if (pokemonList[i].height > 3){
-document.write(`${pokemonList[i].name} (height: ${pokemonList[i].height}) - Woaw that\s a big one ! <br>`);
-} else {
-document.write(`${pokemonList[i].name} (height :  ${pokemonList[i].height}) <br> `);
-}
-}
-*/
-
-/*NEW CODE : displays the list of pokemons and shows message for the ones bigger than 3*/
+/*displays the list of pokemons and shows message for the ones bigger than 3*/
 pokemonRepository.getAll().forEach(function(pokemon) {
-  if (pokemon.height > 3){
-    document.write(pokemon.name + ' (height: ' + pokemon.height + ' ) - Woaw that\s a big one ! <br>');
-  } else {
-    document.write(pokemon.name + ' (height: ' + pokemon.height + ' ) <br>')
-  }
+  pokemonRepository.addListItem(pokemon);
 });
