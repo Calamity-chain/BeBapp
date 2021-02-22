@@ -28,6 +28,8 @@ main {
 }
 
 .button-class {
+  list-style: none;
+  padding: 0;
   background-color: #4caf50; /* Green */
   border: none;
   color: white;
