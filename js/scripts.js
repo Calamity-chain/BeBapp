@@ -7,6 +7,22 @@ let pokemonRepository = (function () {
   let modalContainer = document.querySelector('#modal-container');
 
 
+  /* Displays an asynchronous loading message */
+ function showLoadingMessage() {
+   let pokemonList = document.querySelector(".pokemon-list");
+   let div = document.createElement("div");
+   div.setAttribute("class", "pokemon-list__item");
+   div.innerText = "loading your Pokemon data...";
+   pokemonList.appendChild(div)
+ }
+ /* Hides the loading message */
+ function hideLoadingMessage() {
+   let div = document.querySelector("div.pokemon-list__item")
+   div.parentElement.removeChild(div);
+
+ }
+
+
   function add(pokemon) {
     if (typeof(pokemon) === 'object' &&
       "name" in pokemon &&
@@ -38,20 +54,6 @@ let pokemonRepository = (function () {
     pokemonList.appendChild(listpokemon);
   }
 
-  /* Displays an asynchronous loading message */
- function showLoadingMessage() {
-   let pokemonList = document.querySelector(".pokemon-list");
-   let div = document.createElement("div");
-   div.setAttribute("class", "pokemon-list__item");
-   div.innerText = "loading your Pokemon data...";
-   pokemonList.appendChild(div)
- }
- /* Hides the loading message */
- function hideLoadingMessage() {
-   let div = document.querySelector("div.pokemon-list__item")
-   div.parentElement.removeChild(div);
-
- }
 
 
   function showDetails(item) {
@@ -165,6 +167,81 @@ let pokemonRepository = (function () {
         hideModal();
       }
     });
+
+    //FORM REAL-TIME VALIDATION SECTION
+
+(function() {
+  let form = document.querySelector('#register-form');
+  let emailInput = document.querySelector('#email');
+  let passwordInput = document.querySelector('#password');
+
+  function validateEmail() {
+    let value = emailInput.value;
+    // let hasAtSign = value.indexOf('@')> -1;
+    // let hasDot = value.indexOf('.')> -1;
+    // return value && hasAtSign && hasDot;
+
+    if (!value){
+      showErrorMessage (emailInput, 'Email is a required field.');
+      return false;
+    }
+
+    if (value.indexOf('@') === -1) {
+      showErrorMessage (emailInput, 'You must enter a valid email address.');
+      return false;
+    }
+
+    showErrorMessage (emailInput, null);
+    return true;
+  }
+
+  function validatePassword() {
+    let value = passwordInput.value;
+    //return value && value.length >= 8;
+    if (!value) {
+      showErrorMessage (passwordInput, 'Password is a required field.');
+      return false;
+    }
+    if (value.length < 8) {
+      showErrorMessage (passwordInput, 'The password needs to be at least 8 characters long.');
+      return false;
+    }
+    showErrorMessage (passwordInput, null);
+    return true;
+  }
+
+  function showErrorMessage (input, message) {
+    let container = input.parentElement; // The .input-wrap per
+  //Remove an existing error
+    let error = container.querySelector('.error-message');
+    if (error){
+      container.removeChild(error);
+    }
+  //Add the error if the message isn't empty
+    if (message) {
+      let error = document.createElement('div');
+      error.classList.add('error-message');
+      error.innerText = message;
+      container.appendChild(error);
+    }
+  }
+
+  function validateForm() {
+    let isValidEmail = validateEmail();
+    let isValidPassword = validatePassword();
+    return isValidEmail && isValidPassword ;
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault(); // Do not submit to the server
+    if (validateForm()) {
+      alert('Success!');
+    }
+  })
+
+  emailInput.addEventListener('input', validateEmail);
+  passwordInput.addEventListener('input', validatePassword);
+})();
 
   return {
     add: add,

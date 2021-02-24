@@ -24,6 +24,21 @@ main {
   text-align: center;
 }
 
+/* Form styles */
+.input-wrapper {
+  margin-bottom: 10px;
+}
+
+label {
+  display: inline-block;
+  min-width: 75px;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.8em;
+}
+
 /* Defines list of pokemons */
 .pokemon-list {
   display: flex;
