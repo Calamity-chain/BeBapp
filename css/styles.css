@@ -14,12 +14,14 @@ body {
   font-weight: 400;
   font-size: 16px;
   line-height: 1.6;
+  text-align: center;
 }
 
 
 main {
   padding: 20px;
   margin: 100px;
+  text-align: center;
 }
 
 /* Defines list of pokemons */
@@ -36,6 +38,7 @@ main {
   margin: 10px;
   width: auto;
   min-height: auto;
+  text-align: center;
   }
 
 .button-class {
@@ -114,6 +117,21 @@ main {
   grid-row: 1 / 2;
 }
 
+.modal-image {
+  align-self: center;
+  height: auto;
+  padding: 20px;
+  width: 100%;
+}
+
+.modal-height {
+  height: auto;
+  padding: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+
 .modal-close {
   float: right;
   -webkit-appearance: none;
@@ -125,8 +143,10 @@ main {
 
 .modal h1 {
   margin-top: 0;
+  text-align: center;
 }
 
 .modal p {
   margin-bottom: 0;
+  text-align: center;
 }
