@@ -121,15 +121,3 @@ main {
 .modal p {
   margin-bottom: 0;
 }
-
-.modal-image {
-
-  /* defines image section in modal grid */
-  grid-column: 1 / 2;
-  grid-row: 2 / 3;
-  align-self: center;
-  height: auto;
-  padding: 20px;
-  width: 100%;
-
-}
