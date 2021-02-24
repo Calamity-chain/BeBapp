@@ -22,12 +22,21 @@ main {
   margin: 100px;
 }
 
+/* Defines list of pokemons */
 .pokemon-list {
   display: flex;
   flex-direction: column;
   list-style: none;
   padding: 0;
 }
+
+/* Defines each item of the list of pokemons */
+.pokemon-list__item {
+  padding: 20px;
+  margin: 10px;
+  width: auto;
+  min-height: auto;
+  }
 
 .button-class {
   background-color: #4caf50; /* Green */
