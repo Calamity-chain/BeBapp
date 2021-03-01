@@ -13,7 +13,7 @@ let pokemonRepository = (function () {
    let div = document.createElement("div");
    div.setAttribute("class", "pokemon-list__item");
    div.innerText = "loading your Pokemon data...";
-   pokemonList.appendChild(div)
+   pokemonList.prepend(div)
  }
  /* Hides the loading message */
  function hideLoadingMessage() {
