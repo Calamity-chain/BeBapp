@@ -4,22 +4,71 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <!-- <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;1,400&display=swap" rel="stylesheet"> -->
-  <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" type="text/css" href="css/styles.css">
-  <link rel="stylesheet" type="text/css" href="css/bg.css">
   <title>BeBapp</title>
+
+  <!--BOOTSTRAP css stylesheet-->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<!--BG CSS FOR END STYLE-->
+<!-- FONT for final style with BG
+  <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'> -->
+  <!-- <link rel="stylesheet" type="text/css" href="css/bg.css"> -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
+  <!--BG CSS FOR END STYLE
   <div id='stars'></div>
   <div id='stars2'></div>
   <div id='stars3'></div>
+-->
   <div id='modal-container'></div>
   <div id='title'>
   <h1 >POKEDEX</h1>
   </div>
-    <ul class='pokemon-list'></ul>
+  <ul id="myUL" class='pokemon-list list-group list-group-custom '></ul>
+
+  <!--Navigation Bar with Bootstrap-->
+  <nav class="navbar navbar-light bg-light fixed-top">
+  <a class="navbar-brand" href="#">Pokedex</a>
+</nav>
+<!-- Modal -->
+<div
+      class="modal fade"
+      tabindex="-1"
+      id="pokemon-info"
+      aria-labelledby="pokemon-name"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content text-center">
+          <div class="modal-header">
+            <h5 class="modal-title text-capitalize fs-2" id="pokemon-name"></h5>
+            <p id="pokemon-id"></p>
+            <button
+              type="button"
+              class="btn-close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <img src="img/close-icon2.svg" alt="close icon" />
+            </button>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   <header>
+    <!--place NAVIGATION BAR here-->
   </header>
   <!--This is where the main content will be-->
   <main>
@@ -43,6 +92,8 @@
     </form>
   <script src="js/promise-polyfill.js"></script>
   <script src="js/fetch-polyfill.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script src="js/scripts.js"></script>
 </body>
 </html>

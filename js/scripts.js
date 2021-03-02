@@ -8,28 +8,28 @@ let pokemonRepository = (function () {
 
 
   /* Displays an asynchronous loading message */
- function showLoadingMessage() {
-   let pokemonList = document.querySelector(".pokemon-list");
-   let div = document.createElement("div");
-   div.setAttribute("class", "pokemon-list__item");
-   div.innerText = "loading your Pokemon data...";
-   pokemonList.prepend(div)
- }
- /* Hides the loading message */
- function hideLoadingMessage() {
-   let div = document.querySelector("div.pokemon-list__item")
-   div.parentElement.removeChild(div);
+  function showLoadingMessage() {
+    let pokemonList = document.querySelector(".pokemon-list");
+    let div = document.createElement("div");
+    div.setAttribute("class", "pokemon-list__item");
+    div.innerText = "loading your Pokemon data...";
+    pokemonList.prepend(div)
+  }
+  /* Hides the loading message */
+  function hideLoadingMessage() {
+    let div = document.querySelector("div.pokemon-list__item")
+    div.parentElement.removeChild(div);
 
- }
+  }
 
 
   function add(pokemon) {
     if (typeof(pokemon) === 'object' &&
-      "name" in pokemon &&
+    "name" in pokemon &&
     "detailsUrl" in pokemon) {
       pokemonList.push(pokemon);
     }
-    else {console.error('Invalid attempt to add non-object to pokemonList')}
+    else {alert('Invalid attempt to add non-object to pokemonList')}
   }
 
   function getAll() {
@@ -49,6 +49,14 @@ let pokemonRepository = (function () {
     let button = document.createElement('button');
     button.innerText = pokemon.name;
     button.classList.add("button-class");
+    button.classList.add("list-group-item");
+    button.classList.add("text-capitalize");
+    button.setAttribute("type", "button");
+    button.classList.add("btn");
+    button.classList.add("btn-primary");
+    button.setAttribute("data-target", "#pokemon-info");
+    button.setAttribute("data-toggle", "modal");
+    button.setAttribute("data-bs-name", pokemon.name);
     listpokemon.appendChild(button);
     buttonListener(button, pokemon);
     pokemonList.appendChild(listpokemon);
@@ -56,9 +64,9 @@ let pokemonRepository = (function () {
 
 
 
-  function showDetails(item) {
-    pokemonRepository.loadDetails(item).then(function (response) {
-     showModal(response[0], response[1], response[2]);
+  function showDetails(pokemon) {
+    pokemonRepository.loadDetails(pokemon).then(function () {
+      showModal(pokemon);
     });
   }
 
@@ -67,7 +75,7 @@ let pokemonRepository = (function () {
     return fetch(apiUrl).then(function (response) {
       return response.json();
     }).then(function (json) {
-       hideLoadingMessage();
+      hideLoadingMessage();
       json.results.forEach(function (item) {
         let pokemon = {
           name: item.name,
@@ -77,171 +85,219 @@ let pokemonRepository = (function () {
         console.log(pokemon);
       });
     }).catch(function (e) {
-       hideLoadingMessage();
+      hideLoadingMessage();
       console.error(e);
     })
   }
 
   function loadDetails(item) {
-       showLoadingMessage();
+    showLoadingMessage();
     let url = item.detailsUrl;
     return fetch(url).then(function (response) {
       return response.json();
     }).then(function (details) {
-       hideLoadingMessage();
+      hideLoadingMessage();
       // Now we add the details to the item
-      let detailsArray = [item.name, details.sprites.front_default, details.height, details.types];
-      return detailsArray;
+      item.id = details.id;
+      item.imageUrl = details.sprites.other.dream_world.front_default;
+      item.height = details.height;
+      item.weight = details.weight;
+      item.types = details.types;
     }).catch(function (e) {
-       hideLoadingMessage();
+      hideLoadingMessage();
       console.error(e);
     });
   }
 
-  function showModal(pokemonName, pokemonPicture, pokemonHeight) {
-    // query modal container and make visible
-    let modalContainer = document.querySelector("#modal-container");
-     modalContainer.classList.add("is-visible");
+  //SHOW MODAL with BOOTSTRAP
 
-    // Clear all existing modal content
-     modalContainer.innerHTML = '';
-      // Create modal
-    let modal = document.createElement('div');
-      modal.classList.add('modal');
-      modalContainer.appendChild(modal);
-      // Add the new modal content
-        //create modal header background
-    let header = document.createElement("div");
-    header.setAttribute("id", "modal-header-background");
-    modal.appendChild(header);
-
-    let modalClose = document.createElement("div");
-        modalClose.classList.add("modal-close");
-        modal.appendChild(modalClose);
-
-   let button = document.createElement("button");
-        button.setAttribute("id", "button-close");
-        button.innerText = "close";
-        modalClose.appendChild(button);
-        button.addEventListener('click', (event) => {
-              hideModal()
-            });
-
-    let h1 = document.createElement('h1');
-      h1.classList.add("modal-headline");
-      h1.innerText = pokemonName ;
-      modal.appendChild(h1);
-
-
-      //create modal image section
-    let img = document.createElement('img');
-         img.classList.add('modal-image');
-         img.setAttribute('src', pokemonPicture);
-         modal.appendChild(img);
-
-    let height = document.createElement('div');
-     height.classList.add('modal-height');
-     height.innerText = "Height : " + pokemonHeight;
-    modal.appendChild(height);
-
-
-    }
-
-    function hideModal() {
-      modalContainer.classList.remove('is-visible');
-    }
+  //function defined here
+  function showModal(pokemon){
+    let modalBody = $('.modal.body');
+    let modalTitle = $('.modal-title');
+    let modalHeader = $('.modal-header');
+    let modalId = $("#pokemon-id");
 
 
 
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modalContainer.classList.contains('is-visible')) {
-        hideModal();
-      };
-    });
 
-    modalContainer.addEventListener('click', (e) => {
-      // Since this is also triggered when clicking INSIDE the modal container,
-      // We only want to close if the user clicks directly on the overlay
-      let target = e.target;
-      if (target === modalContainer) {
-        hideModal();
+    modalTitle.empty();
+    modalBody.empty();
+    modalId.empty();
+
+
+    let pokemonId = document.createElement("p");
+    pokemonId.innerText = "ID: " + pokemon.id;
+    let pokemonImage = document.createElement("img");
+    pokemonImage.setAttribute("src", pokemon.imageUrl);
+    pokemonImage.classList.add("img-fluid");
+    pokemonImage.classList.add("mb-2");
+    pokemonImage.classList.add("pokepic");
+    let pokemonHeight = document.createElement("p");
+    pokemonHeight.innerText = "Height: " + pokemon.height / 0.1 + " cm";
+    let pokemonWeight = document.createElement("p");
+    pokemonWeight.innerText = "Weight: " + pokemon.weight / 10 + " kg";
+    let pokemonTypes = document.createElement("p");
+    pokemonTypes.innerText = "Types :" + pokemon.types ;
+
+    modalTitle.append(pokemon.name);
+    modalBody.append(pokemonId);
+    modalBody.append(pokemonImage);
+    modalBody.append(pokemonHeight);
+    modalBody.append(pokemonWeight);
+    modalBody.append(pokemonTypes);
+
+    // // Add class to show modal
+    // modalContainer.addClass("is-visible");
+  }
+
+
+
+  //OLD SHOWMODAL FUNCTION
+  // function showModal(pokemonName, pokemonPicture, pokemonHeight) {
+  //   // query modal container and make visible
+  //   let modalContainer = document.querySelector("#modal-container");
+  //    modalContainer.classList.add("is-visible");
+  //
+  //   // Clear all existing modal content
+  //    modalContainer.innerHTML = '';
+  //     // Create modal
+  //   let modal = document.createElement('div');
+  //     modal.classList.add('modal');
+  //     modalContainer.appendChild(modal);
+  //     // Add the new modal content
+  //       //create modal header background
+  //   let header = document.createElement("div");
+  //   header.setAttribute("id", "modal-header-background");
+  //   modal.appendChild(header);
+  //
+  //   let modalClose = document.createElement("div");
+  //       modalClose.classList.add("modal-close");
+  //       modal.appendChild(modalClose);
+  //
+  //  let button = document.createElement("button");
+  //       button.setAttribute("id", "button-close");
+  //       button.innerText = "close";
+  //       modalClose.appendChild(button);
+  //       button.addEventListener('click', (event) => {
+  //             hideModal()
+  //           });
+  //
+  //   let h1 = document.createElement('h1');
+  //     h1.classList.add("modal-headline");
+  //     h1.innerText = pokemonName ;
+  //     modal.appendChild(h1);
+  //
+  //
+  //     //create modal image section
+  //   let img = document.createElement('img');
+  //        img.classList.add('modal-image');
+  //        img.setAttribute('src', pokemonPicture);
+  //        modal.appendChild(img);
+  //
+  //   let height = document.createElement('div');
+  //    height.classList.add('modal-height');
+  //    height.innerText = "Height : " + pokemonHeight;
+  //   modal.appendChild(height);
+  //
+  //
+  //   }
+  //
+  //   function hideModal() {
+  //     modalContainer.classList.remove('is-visible');
+  //   }
+
+
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modalContainer.classList.contains('is-visible')) {
+      hideModal();
+    };
+  });
+
+  // modalContainer.addEventListener('click', (e) => {
+  //   // Since this is also triggered when clicking INSIDE the modal container,
+  //   // We only want to close if the user clicks directly on the overlay
+  //   let target = e.target;
+  //   if (target === modalContainer) {
+  //     hideModal();
+  //   }
+  // });
+
+  //FORM REAL-TIME VALIDATION SECTION
+
+  (function() {
+    let form = document.querySelector('#register-form');
+    let emailInput = document.querySelector('#email');
+    let passwordInput = document.querySelector('#password');
+
+    function validateEmail() {
+      let value = emailInput.value;
+      // let hasAtSign = value.indexOf('@')> -1;
+      // let hasDot = value.indexOf('.')> -1;
+      // return value && hasAtSign && hasDot;
+
+      if (!value){
+        showErrorMessage (emailInput, 'Email is a required field.');
+        return false;
       }
-    });
 
-    //FORM REAL-TIME VALIDATION SECTION
+      if (value.indexOf('@') === -1) {
+        showErrorMessage (emailInput, 'You must enter a valid email address.');
+        return false;
+      }
 
-(function() {
-  let form = document.querySelector('#register-form');
-  let emailInput = document.querySelector('#email');
-  let passwordInput = document.querySelector('#password');
-
-  function validateEmail() {
-    let value = emailInput.value;
-    // let hasAtSign = value.indexOf('@')> -1;
-    // let hasDot = value.indexOf('.')> -1;
-    // return value && hasAtSign && hasDot;
-
-    if (!value){
-      showErrorMessage (emailInput, 'Email is a required field.');
-      return false;
+      showErrorMessage (emailInput, null);
+      return true;
     }
 
-    if (value.indexOf('@') === -1) {
-      showErrorMessage (emailInput, 'You must enter a valid email address.');
-      return false;
+    function validatePassword() {
+      let value = passwordInput.value;
+      //return value && value.length >= 8;
+      if (!value) {
+        showErrorMessage (passwordInput, 'Password is a required field.');
+        return false;
+      }
+      if (value.length < 8) {
+        showErrorMessage (passwordInput, 'The password needs to be at least 8 characters long.');
+        return false;
+      }
+      showErrorMessage (passwordInput, null);
+      return true;
     }
 
-    showErrorMessage (emailInput, null);
-    return true;
-  }
-
-  function validatePassword() {
-    let value = passwordInput.value;
-    //return value && value.length >= 8;
-    if (!value) {
-      showErrorMessage (passwordInput, 'Password is a required field.');
-      return false;
+    function showErrorMessage (input, message) {
+      let container = input.parentElement; // The .input-wrap per
+      //Remove an existing error
+      let error = container.querySelector('.error-message');
+      if (error){
+        container.removeChild(error);
+      }
+      //Add the error if the message isn't empty
+      if (message) {
+        let error = document.createElement('div');
+        error.classList.add('error-message');
+        error.innerText = message;
+        container.appendChild(error);
+      }
     }
-    if (value.length < 8) {
-      showErrorMessage (passwordInput, 'The password needs to be at least 8 characters long.');
-      return false;
-    }
-    showErrorMessage (passwordInput, null);
-    return true;
-  }
 
-  function showErrorMessage (input, message) {
-    let container = input.parentElement; // The .input-wrap per
-  //Remove an existing error
-    let error = container.querySelector('.error-message');
-    if (error){
-      container.removeChild(error);
+    function validateForm() {
+      let isValidEmail = validateEmail();
+      let isValidPassword = validatePassword();
+      return isValidEmail && isValidPassword ;
     }
-  //Add the error if the message isn't empty
-    if (message) {
-      let error = document.createElement('div');
-      error.classList.add('error-message');
-      error.innerText = message;
-      container.appendChild(error);
-    }
-  }
 
-  function validateForm() {
-    let isValidEmail = validateEmail();
-    let isValidPassword = validatePassword();
-    return isValidEmail && isValidPassword ;
-  }
+    form.addEventListener('submit', (e) => {
+      e.preventDefault(); // Do not submit to the server
+      if (validateForm()) {
+        alert('Success!');
+      }
+    })
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault(); // Do not submit to the server
-    if (validateForm()) {
-      alert('Success!');
-    }
-  })
-
-  emailInput.addEventListener('input', validateEmail);
-  passwordInput.addEventListener('input', validatePassword);
-})();
+    emailInput.addEventListener('input', validateEmail);
+    passwordInput.addEventListener('input', validatePassword);
+  })();
 
   return {
     add: add,
