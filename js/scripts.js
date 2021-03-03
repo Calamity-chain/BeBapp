@@ -104,7 +104,14 @@ let pokemonRepository = (function() {
         item.imageUrl = details.sprites.other.dream_world.front_default;
         item.height = details.height;
         item.weight = details.weight;
-        item.types = details.types;
+        item.types = [];
+        details.types.forEach(function(itemType) {
+          item.types.push(' ' + itemType.type.name + ' ');
+        });
+        item.abilities = [];
+        details.abilities.forEach(function(itemAbilities) {
+          item.abilities.push(' ' + itemAbilities.ability.name + ' ');
+        });
       })
       .catch(function(e) {
         hideLoadingMessage();
@@ -116,14 +123,14 @@ let pokemonRepository = (function() {
 
   //function defined here
   function showModal(pokemon) {
-    let modalBody = $('.modal.body');
+    let modalBody = $('.modal-body');
     let modalTitle = $('.modal-title');
     let modalHeader = $('.modal-header');
-    let modalId = $('#pokemon-id');
+    // let modalId = $('#pokemon-id');
 
     modalTitle.empty();
     modalBody.empty();
-    modalId.empty();
+    // modalId.empty();
 
     let pokemonId = document.createElement('p');
     pokemonId.innerText = 'ID: ' + pokemon.id;
@@ -133,11 +140,13 @@ let pokemonRepository = (function() {
     pokemonImage.classList.add('mb-2');
     pokemonImage.classList.add('pokepic');
     let pokemonHeight = document.createElement('p');
-    pokemonHeight.innerText = 'Height: ' + pokemon.height / 0.1 + ' cm';
+    pokemonHeight.innerText = 'Height : ' + pokemon.height / 0.1 + ' cm';
     let pokemonWeight = document.createElement('p');
-    pokemonWeight.innerText = 'Weight: ' + pokemon.weight / 10 + ' kg';
+    pokemonWeight.innerText = 'Weight : ' + pokemon.weight / 10 + ' kg';
     let pokemonTypes = document.createElement('p');
-    pokemonTypes.innerText = 'Types :' + pokemon.types;
+    pokemonTypes.innerText = 'Types : ' + pokemon.types;
+    let pokemonAbilities = document.createElement('p');
+    pokemonTypes.innerText = 'Abilities : ' + pokemon.abilities;
 
     modalTitle.append(pokemon.name);
     modalBody.append(pokemonId);
@@ -145,79 +154,14 @@ let pokemonRepository = (function() {
     modalBody.append(pokemonHeight);
     modalBody.append(pokemonWeight);
     modalBody.append(pokemonTypes);
-
-    // // Add class to show modal
-    // modalContainer.addClass("is-visible");
+    modalBody.append(pokemonAbilities);
   }
-
-  //OLD SHOWMODAL FUNCTION
-  // function showModal(pokemonName, pokemonPicture, pokemonHeight) {
-  //   // query modal container and make visible
-  //   let modalContainer = document.querySelector("#modal-container");
-  //    modalContainer.classList.add("is-visible");
-  //
-  //   // Clear all existing modal content
-  //    modalContainer.innerHTML = '';
-  //     // Create modal
-  //   let modal = document.createElement('div');
-  //     modal.classList.add('modal');
-  //     modalContainer.appendChild(modal);
-  //     // Add the new modal content
-  //       //create modal header background
-  //   let header = document.createElement("div");
-  //   header.setAttribute("id", "modal-header-background");
-  //   modal.appendChild(header);
-  //
-  //   let modalClose = document.createElement("div");
-  //       modalClose.classList.add("modal-close");
-  //       modal.appendChild(modalClose);
-  //
-  //  let button = document.createElement("button");
-  //       button.setAttribute("id", "button-close");
-  //       button.innerText = "close";
-  //       modalClose.appendChild(button);
-  //       button.addEventListener('click', (event) => {
-  //             hideModal()
-  //           });
-  //
-  //   let h1 = document.createElement('h1');
-  //     h1.classList.add("modal-headline");
-  //     h1.innerText = pokemonName ;
-  //     modal.appendChild(h1);
-  //
-  //
-  //     //create modal image section
-  //   let img = document.createElement('img');
-  //        img.classList.add('modal-image');
-  //        img.setAttribute('src', pokemonPicture);
-  //        modal.appendChild(img);
-  //
-  //   let height = document.createElement('div');
-  //    height.classList.add('modal-height');
-  //    height.innerText = "Height : " + pokemonHeight;
-  //   modal.appendChild(height);
-  //
-  //
-  //   }
-  //
-  //   function hideModal() {
-  //     modalContainer.classList.remove('is-visible');
-  //   }
 
   window.addEventListener('keydown', e => {
     if (e.key === 'Escape' && modalContainer.classList.contains('is-visible')) {
       hideModal();
     }
   });
-
-  // modalContainer.addEventListener('click', (e) => {
-  //   // Since this is also triggered when clicking INSIDE the modal container,
-  //   // We only want to close if the user clicks directly on the overlay
-  //   let target = e.target;
-  //   if (target === modalContainer) {
-  //     hideModal();
-  //   }
-  // });
 
   //FORM REAL-TIME VALIDATION SECTION
 
@@ -228,9 +172,6 @@ let pokemonRepository = (function() {
 
     function validateEmail() {
       let value = emailInput.value;
-      // let hasAtSign = value.indexOf('@')> -1;
-      // let hasDot = value.indexOf('.')> -1;
-      // return value && hasAtSign && hasDot;
 
       if (!value) {
         showErrorMessage(emailInput, 'Email is a required field.');
