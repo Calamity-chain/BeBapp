@@ -29,68 +29,76 @@
   <div id='stars2'></div>
   <div id='stars3'></div>
 -->
-    <div id="modal-container"></div>
-    <div id="title">
-      <h1>POKEDEX</h1>
-    </div>
-    <ul id="myUL" class="pokemon-list list-group list-group-custom "></ul>
+    <header>
+      <!--Navigation Bar with Bootstrap-->
+      <nav class="navbar navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="#">Pokedex</a>
+      </nav>
+    </header>
 
-    <!--Navigation Bar with Bootstrap-->
-    <nav class="navbar navbar-light bg-light fixed-top">
-      <a class="navbar-brand" href="#">Pokedex</a>
-    </nav>
-    <!-- Modal -->
-    <div
-      class="modal fade"
-      tabindex="-1"
-      id="pokemon-info"
-      aria-labelledby="pokemon-name"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content text-center">
-          <div class="modal-header">
-            <h5 class="modal-title text-capitalize fs-2" id="pokemon-name"></h5>
-            <p id="pokemon-id"></p>
-            <button
-              type="button"
-              class="btn-close"
-              data-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body"></div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-            >
-              Close
-            </button>
+    <!--MAIN : List of Pokemons-->
+    <main>
+      <div
+        id="myUL"
+        class="pokemon-list list-group list-group-custom container page-container "
+      ></div>
+
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        tabindex="-1"
+        id="pokemon-info"
+        aria-labelledby="pokemon-name"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5
+                class="modal-title text-capitalize fs-2"
+                id="pokemon-name"
+              ></h5>
+              <p id="pokemon-id"></p>
+              <button
+                type="button"
+                class="btn-close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <img src="img/close.svg" alt="close icon" />
+              </button>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </main>
 
-    <header>
-      <!--place NAVIGATION BAR here-->
-    </header>
-    <!--This is where the main content will be-->
-    <main></main>
-    <form id="register-form">
-      <div class="input-wrapper">
-        <label for="email">E-mail</label>
-        <input id="email" />
-      </div>
+    <!-- FOOTER with registration FORM -->
+    <footer>
+      <form id="register-form">
+        <div class="input-wrapper">
+          <label for="email">E-mail</label>
+          <input id="email" />
+        </div>
 
-      <div class="input-wrapper">
-        <label for="password">Password</label>
-        <input id="password" type="password" />
-      </div>
+        <div class="input-wrapper">
+          <label for="password">Password</label>
+          <input id="password" type="password" />
+        </div>
 
-      <button>Register</button>
-    </form>
+        <button>Register</button>
+      </form>
+    </footer>
     <script src="js/promise-polyfill.js"></script>
     <script src="js/fetch-polyfill.js"></script>
     <script
