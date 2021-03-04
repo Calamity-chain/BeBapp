@@ -1,4 +1,4 @@
-# CF_pokedex_application
+# BeBapp
 <<<<<<< Updated Upstream
 
 # Tech Stack
