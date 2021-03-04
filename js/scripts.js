@@ -52,7 +52,7 @@ let pokemonRepository = (function() {
     button.classList.add('text-capitalize');
     button.setAttribute('type', 'button');
     button.classList.add('btn');
-    button.classList.add('btn-primary');
+    button.classList.add('btn-outline-dark');
     button.setAttribute('data-target', '#pokemon-info');
     button.setAttribute('data-toggle', 'modal');
     button.setAttribute('data-bs-name', pokemon.name);
