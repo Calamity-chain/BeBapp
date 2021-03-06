@@ -146,7 +146,7 @@ let pokemonRepository = (function() {
     let pokemonTypes = document.createElement('p');
     pokemonTypes.innerText = 'Types : ' + pokemon.types;
     let pokemonAbilities = document.createElement('p');
-    pokemonTypes.innerText = 'Abilities : ' + pokemon.abilities;
+    pokemonAbilities.innerText = 'Abilities : ' + pokemon.abilities;
 
     modalTitle.append(pokemon.name);
     modalBody.append(pokemonId);
