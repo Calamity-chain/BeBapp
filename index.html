@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -37,12 +37,44 @@
     </header>
 
     <!--MAIN : List of Pokemons-->
-    <main>
-      <div
-        id="myUL"
-        class="pokemon-list list-group list-group-custom container page-container "
-      ></div>
 
+    <main>
+      <section>
+        <div
+          id="myUL"
+          class="pokemon-list row col-sm-12 list-group list-group-custom container page-container "
+        >
+          <!-- EXAMPLE CARD :
+
+          <div class="row">
+              <div class="col-sm-12">
+                <div class="card-deck">
+                  <div class="card">
+                    <div class="card-block">
+                      <h4 class="card-title">Strategy</h4>
+                      <h6 class="card subtitle">Support card subtitle</h6>
+                    </div>
+                    <img src="img/snakeleg.jpg" alt="a snake leg" />
+                    <div class="card-block">
+                      <p class="card-text">
+                        bliblaaablou bisyhbfdf asdgdficavcja iudchsifbfvksab
+                        vjsbviaybkasbciadhyolfajlkfnakbcakbvky
+                      </p>
+                      <button
+                        type="button"
+                        class="btn btn-success-outline"
+                        data-toggle="modal"
+                        data-target="#myModal"
+                      >
+                        learn more
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+        </div>
+      </section>
       <!-- Modal -->
       <div
         class="modal fade"
@@ -99,8 +131,8 @@
         <button>Register</button>
       </form>
     </footer>
-    <script src="js/promise-polyfill.js"></script>
-    <script src="js/fetch-polyfill.js"></script>
+    <script src="src/js/polyfills/promise-polyfill.js"></script>
+    <script src="src/js/polyfills/fetch-polyfill.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.3.1.min.js"
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -116,6 +148,7 @@
       integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
       crossorigin="anonymous"
     ></script>
-    <script src="js/scripts.js"></script>
+    <script src="src/js/helper.js"></script>
+    <script src="dist/scripts.min.js"></script>
   </body>
 </html>
