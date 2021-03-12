@@ -1,23 +1,9 @@
 // IIFE pokemonRepository
 let pokemonRepository = (function() {
   /*stores the list of pokemons and characteristics*/
-  let pokemonList = [];
-  let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=10';
+  const pokemonList = [];
+  const APIURL = 'https://pokeapi.co/api/v2/pokemon/?limit=10';
   let modalContainer = document.querySelector('#modal-container');
-
-  /* Displays an asynchronous loading message */
-  function showLoadingMessage() {
-    let pokemonList = document.querySelector('.pokemon-list');
-    let div = document.createElement('div');
-    div.setAttribute('class', 'pokemon-list__item');
-    div.innerText = 'loading your Pokemon data...';
-    pokemonList.prepend(div);
-  }
-  /* Hides the loading message */
-  function hideLoadingMessage() {
-    let div = document.querySelector('div.pokemon-list__item');
-    div.parentElement.removeChild(div);
-  }
 
   function add(pokemon) {
     if (
@@ -43,22 +29,24 @@ let pokemonRepository = (function() {
   }
 
   function addListItem(pokemon) {
-    let pokemonList = document.querySelector('.pokemon-list');
+    let pokemonUIList = document.querySelector('.pokemon-list');
     let listpokemon = document.createElement('li');
     let button = document.createElement('button');
     button.innerText = pokemon.name;
-    button.classList.add('button-class');
-    button.classList.add('list-group-item');
-    button.classList.add('text-capitalize');
+    button.classList.add(
+      'button-class',
+      'list-group-item',
+      'text-capitalize',
+      'btn',
+      'btn-outline-dark'
+    );
     button.setAttribute('type', 'button');
-    button.classList.add('btn');
-    button.classList.add('btn-outline-dark');
     button.setAttribute('data-target', '#pokemon-info');
     button.setAttribute('data-toggle', 'modal');
     button.setAttribute('data-bs-name', pokemon.name);
     listpokemon.appendChild(button);
     buttonListener(button, pokemon);
-    pokemonList.appendChild(listpokemon);
+    pokemonUIList.appendChild(listpokemon);
   }
 
   function showDetails(pokemon) {
@@ -69,7 +57,7 @@ let pokemonRepository = (function() {
 
   function loadList() {
     showLoadingMessage();
-    return fetch(apiUrl)
+    return fetch(APIURL)
       .then(function(response) {
         return response.json();
       })
@@ -81,7 +69,6 @@ let pokemonRepository = (function() {
             detailsUrl: item.url
           };
           add(pokemon);
-          console.log(pokemon);
         });
       })
       .catch(function(e) {
@@ -126,19 +113,15 @@ let pokemonRepository = (function() {
     let modalBody = $('.modal-body');
     let modalTitle = $('.modal-title');
     let modalHeader = $('.modal-header');
-    // let modalId = $('#pokemon-id');
 
     modalTitle.empty();
     modalBody.empty();
-    // modalId.empty();
 
     let pokemonId = document.createElement('p');
     pokemonId.innerText = 'ID: ' + pokemon.id;
     let pokemonImage = document.createElement('img');
     pokemonImage.setAttribute('src', pokemon.imageUrl);
-    pokemonImage.classList.add('img-fluid');
-    pokemonImage.classList.add('mb-2');
-    pokemonImage.classList.add('pokepic');
+    pokemonImage.classList.add('img-fluid', 'mb-2', 'pokepic');
     let pokemonHeight = document.createElement('p');
     pokemonHeight.innerText = 'Height : ' + pokemon.height / 0.1 + ' cm';
     let pokemonWeight = document.createElement('p');
@@ -149,12 +132,14 @@ let pokemonRepository = (function() {
     pokemonAbilities.innerText = 'Abilities : ' + pokemon.abilities;
 
     modalTitle.append(pokemon.name);
-    modalBody.append(pokemonId);
-    modalBody.append(pokemonImage);
-    modalBody.append(pokemonHeight);
-    modalBody.append(pokemonWeight);
-    modalBody.append(pokemonTypes);
-    modalBody.append(pokemonAbilities);
+    modalBody.append(
+      pokemonId,
+      pokemonImage,
+      pokemonHeight,
+      pokemonWeight,
+      pokemonTypes,
+      pokemonAbilities
+    );
   }
 
   window.addEventListener('keydown', e => {
@@ -163,87 +148,12 @@ let pokemonRepository = (function() {
     }
   });
 
-  //FORM REAL-TIME VALIDATION SECTION
-
-  (function() {
-    let form = document.querySelector('#register-form');
-    let emailInput = document.querySelector('#email');
-    let passwordInput = document.querySelector('#password');
-
-    function validateEmail() {
-      let value = emailInput.value;
-
-      if (!value) {
-        showErrorMessage(emailInput, 'Email is a required field.');
-        return false;
-      }
-
-      if (value.indexOf('@') === -1) {
-        showErrorMessage(emailInput, 'You must enter a valid email address.');
-        return false;
-      }
-
-      showErrorMessage(emailInput, null);
-      return true;
-    }
-
-    function validatePassword() {
-      let value = passwordInput.value;
-      //return value && value.length >= 8;
-      if (!value) {
-        showErrorMessage(passwordInput, 'Password is a required field.');
-        return false;
-      }
-      if (value.length < 8) {
-        showErrorMessage(
-          passwordInput,
-          'The password needs to be at least 8 characters long.'
-        );
-        return false;
-      }
-      showErrorMessage(passwordInput, null);
-      return true;
-    }
-
-    function showErrorMessage(input, message) {
-      let container = input.parentElement; // The .input-wrap per
-      //Remove an existing error
-      let error = container.querySelector('.error-message');
-      if (error) {
-        container.removeChild(error);
-      }
-      //Add the error if the message isn't empty
-      if (message) {
-        let error = document.createElement('div');
-        error.classList.add('error-message');
-        error.innerText = message;
-        container.appendChild(error);
-      }
-    }
-
-    function validateForm() {
-      let isValidEmail = validateEmail();
-      let isValidPassword = validatePassword();
-      return isValidEmail && isValidPassword;
-    }
-
-    form.addEventListener('submit', e => {
-      e.preventDefault(); // Do not submit to the server
-      if (validateForm()) {
-        alert('Success!');
-      }
-    });
-
-    emailInput.addEventListener('input', validateEmail);
-    passwordInput.addEventListener('input', validatePassword);
-  })();
-
   return {
-    add: add,
-    getAll: getAll,
-    addListItem: addListItem,
-    loadList: loadList,
-    loadDetails: loadDetails
+    add,
+    getAll,
+    addListItem,
+    loadList,
+    loadDetails
   };
 })();
 
